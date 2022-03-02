@@ -8,10 +8,12 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
@@ -28,6 +30,7 @@ public class RobotContainer {
 
   private final Joystick mechJoystick = new Joystick(0);
   private final ShooterSubsystem shooter = new ShooterSubsystem();
+  private final ClimberSubsystem climber = new ClimberSubsystem();
   
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -43,7 +46,14 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(mechJoystick, 3).whenPressed(new InstantCommand(() -> shooter.shoot())).whenReleased(new InstantCommand(() -> shooter.stop()));
+    new JoystickButton(mechJoystick, 3)
+    .whenPressed(new InstantCommand(() -> shooter.shoot()))
+    .whenReleased(new InstantCommand(() -> shooter.stop()));
+
+    // new JoystickButton(mechJoystick, 1).whenPressed(new InstantCommand(() -> climber.setSynchronousSpeed(0.7f))).whenReleased(new InstantCommand(() -> climber.setSynchronousSpeed(0)));
+
+    new Button(() -> mechJoystick.getRawAxis(1) > 0.3).whenPressed(new InstantCommand(() -> climber.setSynchronousSpeed(0.7f))).whenReleased(new InstantCommand(() -> climber.setSynchronousSpeed(0)));
+    new Button(() -> mechJoystick.getRawAxis(1) < -0.3).whenPressed(new InstantCommand(() -> climber.setSynchronousSpeed(-0.7f))).whenReleased(new InstantCommand(() -> climber.setSynchronousSpeed(0)));
   }
 
   /**

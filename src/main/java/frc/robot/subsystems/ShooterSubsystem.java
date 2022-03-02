@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
@@ -11,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterSubsystem extends SubsystemBase {
   
-  private WPI_TalonFX shootMotor = new WPI_TalonFX(1);
+  private WPI_TalonFX shootMotor = new WPI_TalonFX(9);
   
 
   public ShooterSubsystem() {
@@ -33,11 +34,11 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void shoot()
   {
-    this.shootMotor.setVoltage(1);
+    this.shootMotor.set(ControlMode.PercentOutput, 0.7);
   }
 
   public void stop()
   {
-    this.shootMotor.setVoltage(0);
+    this.shootMotor.set(ControlMode.PercentOutput, 0);
   }
 }
