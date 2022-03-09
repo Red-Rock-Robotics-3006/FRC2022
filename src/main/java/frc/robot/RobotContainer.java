@@ -11,6 +11,7 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.TankDriveSubsytem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
@@ -31,6 +32,7 @@ public class RobotContainer {
   private final Joystick mechJoystick = new Joystick(0);
   private final ShooterSubsystem shooter = new ShooterSubsystem();
   private final ClimberSubsystem climber = new ClimberSubsystem();
+  private final TankDriveSubsytem drive = new TankDriveSubsytem();
   
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
