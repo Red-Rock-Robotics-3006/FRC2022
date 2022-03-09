@@ -12,4 +12,21 @@ package frc.robot;
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
-public final class Constants {}
+public final class Constants {
+    public static final class JoystickConstants {
+        //Gamepad values
+        public static final int buttonY = 4;
+        public static final int buttonX = 3;
+        public static final int buttonB = 2;
+        public static final int buttonA = 1;
+        public static final int buttonLeftBumper = 5;
+        public static final int buttonRightBumper = 6; 
+        public static final int leftXAxis = 0;
+        public static final int leftYAxis = 1; 
+        public static final int rightXAxis = 4;
+        public static final int rightYAxis = 5; 
+        public static final int leftTrigger = 2; 
+        public static final int rightTrigger = 3;
+        public static final double triggerDeadZone = 0.05;
+      }
+}
