@@ -49,7 +49,7 @@ public class RobotContainer {
       new RunCommand(
         () -> drive.tank(
           driveStick.getRawAxis(XboxController.Axis.kLeftY.value), 
-          driveStick.getRawAxis(XboxController.Axis.kLeftY.value)
+          driveStick.getRawAxis(XboxController.Axis.kRightY.value)
         )
       )
     );
@@ -65,7 +65,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     //Drive
-
+    // Go to 46-58
     //Intake and Shooter
     new JoystickButton(mechStick, XboxController.Axis.kRightTrigger.value)//JoystickConstants.buttonX)
     .whenPressed(new InstantCommand(() -> shooter.shoot()))
