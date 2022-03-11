@@ -50,7 +50,8 @@ public class RobotContainer {
         () -> drive.tank(
           driveStick.getRawAxis(XboxController.Axis.kLeftY.value), 
           driveStick.getRawAxis(XboxController.Axis.kLeftY.value)
-        )
+        ),
+        drive
       )
     );
 
