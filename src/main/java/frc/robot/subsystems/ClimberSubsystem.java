@@ -19,7 +19,7 @@ public class ClimberSubsystem extends SubsystemBase {
 
   public ClimberSubsystem() {
     this.leftMotor.configFactoryDefault();
-    this.leftMotor.setInverted(true);
+    //this.leftMotor.setInverted(true);
     this.leftMotor.setNeutralMode(NeutralMode.Brake);
 
     this.rightMotor.configFactoryDefault();

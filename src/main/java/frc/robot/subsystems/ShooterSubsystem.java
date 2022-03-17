@@ -34,7 +34,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void shoot()
   {
-    this.shootMotor.set(ControlMode.PercentOutput, 0.7);
+    this.shootMotor.set(ControlMode.PercentOutput, 0.75);
   }
 
   public void stop()

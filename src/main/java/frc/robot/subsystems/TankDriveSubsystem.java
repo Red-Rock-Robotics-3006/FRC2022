@@ -26,11 +26,11 @@ public class TankDriveSubsystem extends SubsystemBase {
     this.leftMotorFront.setNeutralMode(NeutralMode.Brake);
 
     this.rightMotorBack.configFactoryDefault();
-    this.rightMotorBack.setInverted(true);
+    //this.rightMotorBack.setInverted(true);
     this.rightMotorBack.setNeutralMode(NeutralMode.Brake);
 
     this.rightMotorFront.configFactoryDefault();
-    this.rightMotorFront.setInverted(true);
+    //this.rightMotorFront.setInverted(true);
     this.rightMotorFront.setNeutralMode(NeutralMode.Brake);
   }
 

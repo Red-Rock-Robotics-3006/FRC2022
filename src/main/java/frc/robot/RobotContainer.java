@@ -48,8 +48,8 @@ public class RobotContainer {
     drive.setDefaultCommand(
       new RunCommand(
         () -> drive.tank(
-          driveStick.getRawAxis(XboxController.Axis.kLeftY.value), 
-          driveStick.getRawAxis(XboxController.Axis.kLeftY.value)
+          0.5*driveStick.getRawAxis(XboxController.Axis.kLeftY.value), 
+          0.5*driveStick.getRawAxis(XboxController.Axis.kRightY.value)
         ),
         drive
       )
@@ -72,16 +72,28 @@ public class RobotContainer {
     .whenPressed(new InstantCommand(() -> shooter.shoot()))
     .whenReleased(new InstantCommand(() -> shooter.stop()));
     new JoystickButton(mechStick, XboxController.Axis.kLeftTrigger.value)//JoystickConstants.buttonA)
-    .whenPressed(new InstantCommand(() -> intake.setPower(0.2)))
+    .whenPressed(new InstantCommand(() -> intake.setPower(0.3)))
+    .whenReleased(new InstantCommand(() -> intake.setPower(0)));
+    new JoystickButton(mechStick, XboxController.Button.kY.value)//JoystickConstants.buttonA)
+    .whenPressed(new InstantCommand(() -> intake.setPower(-0.3)))
     .whenReleased(new InstantCommand(() -> intake.setPower(0)));
 
     //Climber
     new Button(() -> -1 * mechStick.getRawAxis(XboxController.Axis.kLeftY.value) > 0.3)
-    .whenPressed(new InstantCommand(() -> climber.setSynchronousSpeed(0.3f)))
-    .whenReleased(new InstantCommand(() -> climber.setSynchronousSpeed(0)));
+    .whenPressed(new InstantCommand(() -> climber.leftSpeed(0.3f)))
+    .whenReleased(new InstantCommand(() -> climber.leftSpeed(0)));
     new Button(() -> -1 * mechStick.getRawAxis(XboxController.Axis.kLeftY.value) < -0.3)
-    .whenPressed(new InstantCommand(() -> climber.setSynchronousSpeed(-0.3f)))
-    .whenReleased(new InstantCommand(() -> climber.setSynchronousSpeed(0)));
+    .whenPressed(new InstantCommand(() -> climber.leftSpeed(-0.3f)))
+    .whenReleased(new InstantCommand(() -> climber.leftSpeed(0)));
+    new Button(() -> -1 * mechStick.getRawAxis(XboxController.Axis.kRightY.value) > 0.3)
+    .whenPressed(new InstantCommand(() -> climber.rightSpeed(0.3f)))
+    .whenReleased(new InstantCommand(() -> climber.rightSpeed(0)));
+    new Button(() -> -1 * mechStick.getRawAxis(XboxController.Axis.kRightY.value) < -0.3)
+    .whenPressed(new InstantCommand(() -> climber.rightSpeed(-0.3f)))
+    .whenReleased(new InstantCommand(() -> climber.rightSpeed(0)));
+    new Button(() -> -1 * mechStick.getRawAxis(XboxController.Button.kA.value) < -0.3)
+    .whenPressed(new InstantCommand(() -> climber.anglerSpeed(-0.3f)))
+    .whenReleased(new InstantCommand(() -> climber.anglerSpeed(0)));
     /*new JoystickButton(mechStick, JoystickConstants.buttonB)
     .whenPressed(new InstantCommand(() -> climber.rightSpeed(0.3f)))
     .whenReleased(new InstantCommand(() -> climber.rightSpeed(0)));
