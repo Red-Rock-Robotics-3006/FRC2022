@@ -8,6 +8,9 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.JoystickConstants;
+
+
+//import frc.robot.commands.Auto;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -32,6 +35,7 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  
 
   private final XboxController driveStick = new XboxController(0);
   private final XboxController mechStick = new XboxController(1);
@@ -39,6 +43,7 @@ public class RobotContainer {
   private final ClimberSubsystem climber = new ClimberSubsystem();
   private final IntakeSubsystem intake = new IntakeSubsystem();
   private final TankDriveSubsystem drive = new TankDriveSubsystem();
+  //private final Auto basicAutoCommand = new Auto(drive,intake);
  // private final TankDriveSubsytem drive = new TankDriveSubsytem();
   
 
@@ -72,7 +77,7 @@ public class RobotContainer {
     .whenPressed(new InstantCommand(() -> shooter.shoot()))
     .whenReleased(new InstantCommand(() -> shooter.stop()));
     new JoystickButton(mechStick, XboxController.Axis.kLeftTrigger.value)//JoystickConstants.buttonA)
-    .whenPressed(new InstantCommand(() -> intake.setPower(0.3)))
+    .whenPressed(new InstantCommand(() -> intake.setPower(0.5)))
     .whenReleased(new InstantCommand(() -> intake.setPower(0)));
     new JoystickButton(mechStick, XboxController.Button.kY.value)//JoystickConstants.buttonA)
     .whenPressed(new InstantCommand(() -> intake.setPower(-0.3)))

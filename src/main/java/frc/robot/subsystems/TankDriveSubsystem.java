@@ -53,6 +53,17 @@ public class TankDriveSubsystem extends SubsystemBase {
     return this;
   }
 
+  public TankDriveSubsystem allMotorEquality(double power)
+  {
+    this.leftMotorBack.set(ControlMode.PercentOutput, power);
+    this.leftMotorFront.set(ControlMode.PercentOutput, power);
+    this.rightMotorBack.set(ControlMode.PercentOutput, power);
+    this.rightMotorFront.set(ControlMode.PercentOutput, power);
+    
+
+    return this;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

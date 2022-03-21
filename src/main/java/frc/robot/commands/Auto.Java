@@ -6,7 +6,7 @@ package frc.robot.commands;
 
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.TankDriveSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
+impo.subsystems.IntakeSubsystem;rt frc.robot
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.command.Command;
@@ -18,6 +18,7 @@ public class BasicAuto extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final TankDriveSubsystem driveTrain;
   private final IntakeSubsystem intake;
+  private final ShooterSubsystem shooter;
   /**
    * Creates a new ExampleCommand.
    *
@@ -26,11 +27,11 @@ public class BasicAuto extends CommandBase {
   
   private boolean doneRunning = false; 
 
-  public BasicAuto(TankDriveSubsystem driveTrain,IntakeSubsystem intake) {
+  public BasicAuto(TankDriveSubsystem driveTrain,IntakeSubsystem intake,ShooterSubsystem shooter) {
     
     this.driveTrain = driveTrain;
     this.intake = intake;
-  
+    this.shooter = shooter;
   }
 
   @Override
@@ -43,7 +44,8 @@ public class BasicAuto extends CommandBase {
   public void execute() {
      
     TimedCommand(2,this.driveTrain.allMotorEquality(0.1))
-    TimedCommand(5,this.intake.setPower(1))
+    TimedCommand(5,this.intake.setPower(1),this.shooter.shoot)
+    this.shooter.stop;
     this.doneRunning = true; 
 
     // while(this.driveTrain.getRightEncoderDistance() > 3)
