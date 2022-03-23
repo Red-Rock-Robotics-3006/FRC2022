@@ -20,6 +20,15 @@ public class IntakeSubsystem extends SubsystemBase {
     this.intakeMotor.setNeutralMode(NeutralMode.Brake);
   }
 
+  public void resetEncoders()
+  {
+    this.intakeMotor.getSensorCollection().setIntegratedSensorPosition(0, 0);
+  }
+  public double getEncoderDistance()
+  {
+    return this.intakeMotor.getSensorCollection().getIntegratedSensorPosition();
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

@@ -7,7 +7,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -15,7 +15,7 @@ public class ClimberSubsystem extends SubsystemBase {
 
   public WPI_TalonFX leftMotor = new WPI_TalonFX(8);
   public WPI_TalonFX rightMotor = new WPI_TalonFX(11);
-  public WPI_TalonSRX angleMaker = new WPI_TalonSRX(12);
+  public WPI_VictorSPX angleMaker = new WPI_VictorSPX(12);
 
   public ClimberSubsystem() {
     this.leftMotor.configFactoryDefault();

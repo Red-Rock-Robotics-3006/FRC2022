@@ -22,6 +22,15 @@ public class ShooterSubsystem extends SubsystemBase {
 
   }
 
+  public void resetEncoders()
+  {
+    this.shootMotor.getSensorCollection().setIntegratedSensorPosition(0, 0);
+  }
+  public double getEncoderDistance()
+  {
+    return this.shootMotor.getSensorCollection().getIntegratedSensorPosition();
+  }
+
   @Override
   public void periodic() {
     
@@ -34,7 +43,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void shoot()
   {
-    this.shootMotor.set(ControlMode.PercentOutput, 0.75);
+    this.shootMotor.set(ControlMode.PercentOutput, 1.0);
   }
 
   public void stop()
