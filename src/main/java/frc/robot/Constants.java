@@ -13,11 +13,16 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  public static final class DriveConstants
-  {
-    public static final int kEncoderCPR = 2048;
-    public static final double kWheelDiameterMeters = 0.15875;
-    public static final double kEncoderDistancePerPulse = (kWheelDiameterMeters * Math.PI) / ((double) kEncoderCPR * 10.71);
+  // public static final class DriveConstants
+  // {
+  //   public static final int kEncoderCPR = 2048;
+  //   public static final double kWheelDiameterMeters = 0.15875;
+  //   public static final double kEncoderDistancePerPulse = (kWheelDiameterMeters * Math.PI) / ((double) kEncoderCPR * 10.71);
+  // }
+  public static final class auto{
+    public static final double wheelRotations = 4096;
+    public static final double wheelDiameter = 0.15875;
+    public static final double wheelCircumference = wheelDiameter * Math.PI;
   }
     public static final class JoystickConstants {
         //Gamepad values

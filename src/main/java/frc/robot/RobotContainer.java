@@ -9,9 +9,12 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.commands.Autonomous;
+import frc.robot.commands.DriveLengthCommand;
 //import frc.robot.commands.WorkInProggressAuto;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.IntakeLengthCommand;
 import frc.robot.commands.ShootCommand;
+import frc.robot.commands.ShootPowerCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -20,6 +23,7 @@ import frc.robot.subsystems.TankDriveSubsystem;
 //import frc.robot.subsystems.TankDriveSubsytem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -82,6 +86,13 @@ public class RobotContainer {
     .whenPressed(new InstantCommand(() -> intake.setPower(-0.3)))
     .whenReleased(new InstantCommand(() -> intake.setPower(0)));
 
+    new JoystickButton(mechStick, XboxController.Button.kA.value)
+    .whenPressed(new InstantCommand(() -> climber.anglerSpeed(-0.3f)))
+    .whenReleased(new InstantCommand(() -> climber.anglerSpeed(0)));
+    new JoystickButton(mechStick, 2)
+    .whenPressed(new InstantCommand(() -> climber.anglerSpeed(0.3f)))
+    .whenReleased(new InstantCommand(() -> climber.anglerSpeed(0)));
+
     //Climber
     new Button(() -> -1 * mechStick.getRawAxis(XboxController.Axis.kLeftY.value) > 0.3)
     .whenPressed(new InstantCommand(() -> climber.leftSpeed(0.3f)))
@@ -95,9 +106,9 @@ public class RobotContainer {
     new Button(() -> -1 * mechStick.getRawAxis(XboxController.Axis.kRightY.value) < -0.3)
     .whenPressed(new InstantCommand(() -> climber.rightSpeed(-0.3f)))
     .whenReleased(new InstantCommand(() -> climber.rightSpeed(0)));
-    new Button(() -> -1 * mechStick.getRawAxis(XboxController.Button.kA.value) < -0.3)
-    .whenPressed(new InstantCommand(() -> climber.anglerSpeed(-0.3f)))
-    .whenReleased(new InstantCommand(() -> climber.anglerSpeed(0)));
+    // new Button(() -> -1 * mechStick.getRawAxis(XboxController.Button.kA.value) < -0.3)
+    // .whenPressed(new InstantCommand(() -> climber.anglerSpeed(-0.3f)))
+    // .whenReleased(new InstantCommand(() -> climber.anglerSpeed(0)));
     /*new JoystickButton(mechStick, JoystickConstants.buttonB)
     .whenPressed(new InstantCommand(() -> climber.rightSpeed(0.3f)))
     .whenReleased(new InstantCommand(() -> climber.rightSpeed(0)));
@@ -126,6 +137,12 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new ShootCommand(shooter, intake, drive);
+    //return new new ShootCommand(shooter, intake, drive);
+    return new DriveLengthCommand(this.drive, -0.2, 100000)
+      .beforeStarting(new ParallelDeadlineGroup(
+        new IntakeLengthCommand(this.intake, 0.3, 500000), 
+        new ShootPowerCommand(this.shooter, 0.7)
+        )
+      );//new ShootCommand(shooter, intake, drive);
   }
 }

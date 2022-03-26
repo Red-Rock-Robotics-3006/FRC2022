@@ -18,65 +18,63 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-
 public class Autonomous extends SequentialCommandGroup {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  // private final TankDriveSubsystem driveTrain;
-  // private final IntakeSubsystem intake;
-  // private final ShooterSubsystem shooter;
+  @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
+  private final TankDriveSubsystem driveTrain;
+  private final IntakeSubsystem intake;
+  private final ShooterSubsystem shooter;
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  
-  
+
   public Autonomous(TankDriveSubsystem driveTrain, IntakeSubsystem intake, ShooterSubsystem shooter) {
-    
+    this.driveTrain = driveTrain;
+    this.intake = intake;
+    this.shooter = shooter;
+
     addCommands(
       new ShootCommand(shooter, intake, driveTrain)
     );
   }
 
-  // @Override
-  // public void initialize() {
-  // //  this.driveTrain.resetEncoders();
-  // }
+  @Override
+  public void initialize() {
+    this.driveTrain.resetEncoders();
+  }
 
-  // // Called every time the scheduler runs while the command is scheduled.
-  // @Override
-  // public void execute() {
-     
-  //   // new InstantCommand(() -> driveTrain.allMotorEquality(0.2));
-  //   // new InstantCommand(() -> intake.setPower(0.5));
-  //   // new InstantCommand(() -> shooter.shoot());
-   
-  //   // while(this.driveTrain.getRightEncoderDistance() > 3)
-  //   // {
-  //   //   driveTrain.resetEncoders();
-  //   //   System.out.println("Encoder Distance: " + driveTrain.getRightEncoderDistance());
-  //   // }
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {
 
-  //   // while(driveTrain.getRightEncoderDistance() < 3)
-  //   // {
-  //   //   System.out.println("Here AGain!");
-  //   //   driveTrain.mecDrive(0, 0, 0.0, -0.5);
-  //   // }
+    /*new InstantCommand(() -> driveTrain.allMotorEquality(0.2));
+    new InstantCommand(() -> intake.setPower(0.5));
+    new InstantCommand(() -> shooter.shoot());*/
 
-    
-  // }
+    /*while (this.driveTrain.getRightEncoderDistance() > 3) {
+      driveTrain.resetEncoders();
+      System.out.println("Encoder Distance: " + driveTrain.getRightEncoderDistance());
+    }
 
-  // @Override
-  // public boolean isFinished() {
-  //   return this.driveTrain.getRightEncoderDistance() > 10000;
-  // }
+    while (driveTrain.getRightEncoderDistance() < 3) {
+      System.out.println("Here AGain!");
+      driveTrain.mecDrive(0, 0, 0.0, -0.5);
+    }*/
 
-  // // Called once the command ends or is interrupted.
-  // @Override
-  // public void end(boolean interrupted) {
-  //   this.driveTrain.allMotorEquality(0);
-  //   this.shooter.stop();
-  //   this.intake.setPower(0);
-  // }
+  }
+
+  @Override
+  public boolean isFinished() {
+    return this.driveTrain.getRightEncoderDistance() > 10000;
+  }
+
+  //Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {
+    this.driveTrain.allMotorEquality(0);
+    this.shooter.stop();
+    this.intake.setPower(0);
+  }
 }

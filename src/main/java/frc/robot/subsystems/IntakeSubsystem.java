@@ -43,4 +43,8 @@ public class IntakeSubsystem extends SubsystemBase {
   {
     this.intakeMotor.set(ControlMode.PercentOutput, power);
   }
+
+  public void stop() {
+    this.setPower(0);
+  }
 }

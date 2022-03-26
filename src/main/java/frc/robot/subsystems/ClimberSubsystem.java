@@ -7,7 +7,11 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+// import com.revrobotics.CANSparkMAX;
+// import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
+//import com.ctre.phoenix.motorcontrol.can.WPI_rev;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -15,8 +19,7 @@ public class ClimberSubsystem extends SubsystemBase {
 
   public WPI_TalonFX leftMotor = new WPI_TalonFX(8);
   public WPI_TalonFX rightMotor = new WPI_TalonFX(11);
-  public WPI_VictorSPX angleMaker = new WPI_VictorSPX(12);
-
+  public CANSparkMax angleMaker = new CANSparkMax(62, CANSparkMaxLowLevel.MotorType.kBrushed);
   public ClimberSubsystem() {
     this.leftMotor.configFactoryDefault();
     //this.leftMotor.setInverted(true);
@@ -26,9 +29,9 @@ public class ClimberSubsystem extends SubsystemBase {
     this.rightMotor.setInverted(true);
     this.rightMotor.setNeutralMode(NeutralMode.Brake);
 
-    this.angleMaker.configFactoryDefault();
+    this.angleMaker.restoreFactoryDefaults();
     this.angleMaker.setInverted(true);
-    this.angleMaker.setNeutralMode(NeutralMode.Brake);
+    this.angleMaker.setIdleMode(CANSparkMax.IdleMode.kBrake);
   }
 
   @Override
@@ -54,7 +57,7 @@ public class ClimberSubsystem extends SubsystemBase {
     this.leftMotor.set(ControlMode.PercentOutput,targetSpeed);
   }
   public void anglerSpeed(float targetSpeed){
-    this.angleMaker.set(ControlMode.PercentOutput,targetSpeed);
+    this.angleMaker.set(targetSpeed);
   }
 
   // this.shootMotor.set(ControlMode.PercentOutput, 0.7);
