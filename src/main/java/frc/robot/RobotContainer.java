@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -138,11 +139,23 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     //return new new ShootCommand(shooter, intake, drive);
-    return new DriveLengthCommand(this.drive, -0.2, 100000)
+    /*return new DriveLengthCommand(this.drive, -0.2, 100000)
       .beforeStarting(new ParallelDeadlineGroup(
         new IntakeLengthCommand(this.intake, 0.3, 500000), 
         new ShootPowerCommand(this.shooter, 0.7)
         )
-      );//new ShootCommand(shooter, intake, drive);
+      );*/
+    // The following section should:
+    // Start spinning up the shooter
+    // Start the intake 2 seconds later
+    // Stop both the intake and shooter after the intake has spun for 500,000 encoder ticks
+    // Drive forwards for 100,000 encoder ticks
+    return new DriveLengthCommand(this.drive, -0.2, 100000) //(Drive subsys; Drive power; Drive encoder ticks)
+      .beforeStarting(new ParallelDeadlineGroup(
+        (new IntakeLengthCommand(this.intake, 0.3, 500000)) //(Intake subsys; Intake power; Intake encoder ticks)
+          .beforeStarting(new WaitCommand(2.0)), //(Wait seconds) - This should be long enough to allow the shooter to speed up before ball feeding
+        new ShootPowerCommand(this.shooter, 0.7) //(Shooter subsys; Shooter power)
+      )
+    );
   }
 }
