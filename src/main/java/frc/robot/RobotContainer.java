@@ -79,17 +79,20 @@ public class RobotContainer {
     new JoystickButton(mechStick, XboxController.Axis.kRightTrigger.value)//JoystickConstants.buttonX)
     .whenPressed(new InstantCommand(() -> shooter.shoot()))
     .whenReleased(new InstantCommand(() -> shooter.stop()));
-    new JoystickButton(mechStick, XboxController.Axis.kLeftTrigger.value)//JoystickConstants.buttonA)
+    // new JoystickButton(mechStick, XboxController.Axis.kLeftTrigger.value)//JoystickConstants.buttonA)
+    // .whenPressed(new InstantCommand(() -> intake.setPower(0.5)))
+    // .whenReleased(new InstantCommand(() -> intake.setPower(0)));
+    new JoystickButton(mechStick, XboxController.Button.kA.value)//JoystickConstants.buttonA)
     .whenPressed(new InstantCommand(() -> intake.setPower(0.5)))
     .whenReleased(new InstantCommand(() -> intake.setPower(0)));
-    new JoystickButton(mechStick, XboxController.Button.kY.value)//JoystickConstants.buttonA)
+    new JoystickButton(mechStick, XboxController.Button.kB.value)//JoystickConstants.buttonA)
     .whenPressed(new InstantCommand(() -> intake.setPower(-0.3)))
     .whenReleased(new InstantCommand(() -> intake.setPower(0)));
 
-    new JoystickButton(mechStick, XboxController.Button.kA.value)
+    new JoystickButton(mechStick, XboxController.Button.kRightBumper.value)
     .whenPressed(new InstantCommand(() -> climber.anglerSpeed(-0.3f)))
     .whenReleased(new InstantCommand(() -> climber.anglerSpeed(0)));
-    new JoystickButton(mechStick, 2)
+    new JoystickButton(mechStick, XboxController.Button.kLeftBumper.value)//if doesn't work change back to 2
     .whenPressed(new InstantCommand(() -> climber.anglerSpeed(0.3f)))
     .whenReleased(new InstantCommand(() -> climber.anglerSpeed(0)));
 
