@@ -48,6 +48,7 @@ public class RobotContainer {
   private final IntakeSubsystem intake = new IntakeSubsystem();
   private final TankDriveSubsystem drive = new TankDriveSubsystem();
   private final Autonomous basicAutoCommand = new Autonomous(drive,intake, shooter);
+  double speed = 0.65;
   //private final TankDriveSubsystem drive = new TankDriveSubsytem();
   
 
@@ -57,8 +58,8 @@ public class RobotContainer {
     drive.setDefaultCommand(
       new RunCommand(
         () -> drive.tank(
-          0.5*driveStick.getRawAxis(XboxController.Axis.kLeftY.value), 
-          0.5*driveStick.getRawAxis(XboxController.Axis.kRightY.value)
+          speed*driveStick.getRawAxis(XboxController.Axis.kLeftY.value), 
+          speed*driveStick.getRawAxis(XboxController.Axis.kRightY.value)
         ),
         drive
       )
@@ -77,9 +78,20 @@ public class RobotContainer {
     //Drive
     // Go to 46-58
     //Intake and Shooter
-    new JoystickButton(mechStick, XboxController.Axis.kRightTrigger.value)//JoystickConstants.buttonX)
+    // new JoystickButton(mechStick, XboxController.Axis.kRightTrigger.value)//JoystickConstants.buttonX)
+    // .whenPressed(new InstantCommand(() -> shooter.shoot()))
+    // .whenReleased(new InstantCommand(() -> shooter.stop()));
+    // shooter.setPower(mechStick.getRawAxis(XboxController.Axis.kRightTrigger.value));
+    // THIS IS THE ONE THAT WORKS
+    new JoystickButton(mechStick, XboxController.Button.kX.value)//JoystickConstants.buttonX)
     .whenPressed(new InstantCommand(() -> shooter.shoot()))
     .whenReleased(new InstantCommand(() -> shooter.stop()));
+    // shooter.setPower(mechStick.getRawAxis(XboxController.Axis.kRightTrigger.value));
+    // System.out.println("SHOOTER POWER" + XboxController.Axis.kRightTrigger.value);
+    // new JoystickButton(mechStick, XboxController.Axis.kRightTrigger.value)//JoystickConstants.buttonX)
+    // .whenPressed(new InstantCommand(() -> shooter.setPower(mechStick.getRawAxis(XboxController.Axis.kRightTrigger.value))))
+    // .whenReleased(new InstantCommand(() -> shooter.stop()));
+
     // new JoystickButton(mechStick, XboxController.Axis.kLeftTrigger.value)//JoystickConstants.buttonA)
     // .whenPressed(new InstantCommand(() -> intake.setPower(0.5)))
     // .whenReleased(new InstantCommand(() -> intake.setPower(0)));
@@ -91,10 +103,10 @@ public class RobotContainer {
     .whenReleased(new InstantCommand(() -> intake.setPower(0)));
 
     new JoystickButton(mechStick, XboxController.Button.kRightBumper.value)
-    .whenPressed(new InstantCommand(() -> climber.anglerSpeed(-0.3f)))
+    .whenPressed(new InstantCommand(() -> climber.anglerSpeed(-0.5f)))
     .whenReleased(new InstantCommand(() -> climber.anglerSpeed(0)));
     new JoystickButton(mechStick, XboxController.Button.kLeftBumper.value)//if doesn't work change back to 2
-    .whenPressed(new InstantCommand(() -> climber.anglerSpeed(0.3f)))
+    .whenPressed(new InstantCommand(() -> climber.anglerSpeed(0.5f)))
     .whenReleased(new InstantCommand(() -> climber.anglerSpeed(0)));
 
     //Climber
@@ -156,8 +168,8 @@ public class RobotContainer {
     return new DriveLengthCommand(this.drive, -0.2, 100000) //(Drive subsys; Drive power; Drive encoder ticks)
       .beforeStarting(new ParallelDeadlineGroup(
         (new IntakeLengthCommand(this.intake, 0.3, 500000)) //(Intake subsys; Intake power; Intake encoder ticks)
-          .beforeStarting(new WaitCommand(2.0)), //(Wait seconds) - This should be long enough to allow the shooter to speed up before ball feeding
-        new ShootPowerCommand(this.shooter, 0.7) //(Shooter subsys; Shooter power)
+          .beforeStarting(new WaitCommand(2.7)), //(Wait seconds) - This should be long enough to allow the shooter to speed up before ball feeding
+        new ShootPowerCommand(this.shooter, 0.59) //(Shooter subsys; Shooter power)
       )
     );
   }
