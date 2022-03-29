@@ -64,6 +64,19 @@ public class TankDriveSubsystem extends SubsystemBase {
     return this;
   }
 
+  public double getRightEncoderDistance()
+  {
+    return this.rightMotorBack.getSensorCollection().getIntegratedSensorPosition();
+  }
+
+  public void resetEncoders()
+  {
+    this.rightMotorBack.getSensorCollection().setIntegratedSensorPosition(0, 0);
+    this.leftMotorBack.getSensorCollection().setIntegratedSensorPosition(0, 0);
+    this.rightMotorFront.getSensorCollection().setIntegratedSensorPosition(0, 0);
+    this.leftMotorBack.getSensorCollection().setIntegratedSensorPosition(0, 0);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

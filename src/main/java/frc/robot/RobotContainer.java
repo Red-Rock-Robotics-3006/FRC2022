@@ -8,10 +8,13 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.JoystickConstants;
-
-
-//import frc.robot.commands.Auto;
+import frc.robot.commands.Autonomous;
+import frc.robot.commands.DriveLengthCommand;
+//import frc.robot.commands.WorkInProggressAuto;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.IntakeLengthCommand;
+import frc.robot.commands.ShootCommand;
+import frc.robot.commands.ShootPowerCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -20,7 +23,9 @@ import frc.robot.subsystems.TankDriveSubsystem;
 //import frc.robot.subsystems.TankDriveSubsytem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -35,7 +40,6 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  
 
   private final XboxController driveStick = new XboxController(0);
   private final XboxController mechStick = new XboxController(1);
@@ -43,8 +47,8 @@ public class RobotContainer {
   private final ClimberSubsystem climber = new ClimberSubsystem();
   private final IntakeSubsystem intake = new IntakeSubsystem();
   private final TankDriveSubsystem drive = new TankDriveSubsystem();
-  //private final Auto basicAutoCommand = new Auto(drive,intake);
- // private final TankDriveSubsytem drive = new TankDriveSubsytem();
+  private final Autonomous basicAutoCommand = new Autonomous(drive,intake, shooter);
+  //private final TankDriveSubsystem drive = new TankDriveSubsytem();
   
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -76,12 +80,22 @@ public class RobotContainer {
     new JoystickButton(mechStick, XboxController.Axis.kRightTrigger.value)//JoystickConstants.buttonX)
     .whenPressed(new InstantCommand(() -> shooter.shoot()))
     .whenReleased(new InstantCommand(() -> shooter.stop()));
-    new JoystickButton(mechStick, XboxController.Axis.kLeftTrigger.value)//JoystickConstants.buttonA)
+    // new JoystickButton(mechStick, XboxController.Axis.kLeftTrigger.value)//JoystickConstants.buttonA)
+    // .whenPressed(new InstantCommand(() -> intake.setPower(0.5)))
+    // .whenReleased(new InstantCommand(() -> intake.setPower(0)));
+    new JoystickButton(mechStick, XboxController.Button.kA.value)//JoystickConstants.buttonA)
     .whenPressed(new InstantCommand(() -> intake.setPower(0.5)))
     .whenReleased(new InstantCommand(() -> intake.setPower(0)));
-    new JoystickButton(mechStick, XboxController.Button.kY.value)//JoystickConstants.buttonA)
+    new JoystickButton(mechStick, XboxController.Button.kB.value)//JoystickConstants.buttonA)
     .whenPressed(new InstantCommand(() -> intake.setPower(-0.3)))
     .whenReleased(new InstantCommand(() -> intake.setPower(0)));
+
+    new JoystickButton(mechStick, XboxController.Button.kRightBumper.value)
+    .whenPressed(new InstantCommand(() -> climber.anglerSpeed(-0.3f)))
+    .whenReleased(new InstantCommand(() -> climber.anglerSpeed(0)));
+    new JoystickButton(mechStick, XboxController.Button.kLeftBumper.value)//if doesn't work change back to 2
+    .whenPressed(new InstantCommand(() -> climber.anglerSpeed(0.3f)))
+    .whenReleased(new InstantCommand(() -> climber.anglerSpeed(0)));
 
     //Climber
     new Button(() -> -1 * mechStick.getRawAxis(XboxController.Axis.kLeftY.value) > 0.3)
@@ -96,9 +110,9 @@ public class RobotContainer {
     new Button(() -> -1 * mechStick.getRawAxis(XboxController.Axis.kRightY.value) < -0.3)
     .whenPressed(new InstantCommand(() -> climber.rightSpeed(-0.3f)))
     .whenReleased(new InstantCommand(() -> climber.rightSpeed(0)));
-    new Button(() -> -1 * mechStick.getRawAxis(XboxController.Button.kA.value) < -0.3)
-    .whenPressed(new InstantCommand(() -> climber.anglerSpeed(-0.3f)))
-    .whenReleased(new InstantCommand(() -> climber.anglerSpeed(0)));
+    // new Button(() -> -1 * mechStick.getRawAxis(XboxController.Button.kA.value) < -0.3)
+    // .whenPressed(new InstantCommand(() -> climber.anglerSpeed(-0.3f)))
+    // .whenReleased(new InstantCommand(() -> climber.anglerSpeed(0)));
     /*new JoystickButton(mechStick, JoystickConstants.buttonB)
     .whenPressed(new InstantCommand(() -> climber.rightSpeed(0.3f)))
     .whenReleased(new InstantCommand(() -> climber.rightSpeed(0)));
@@ -127,6 +141,24 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    //return new new ShootCommand(shooter, intake, drive);
+    /*return new DriveLengthCommand(this.drive, -0.2, 100000)
+      .beforeStarting(new ParallelDeadlineGroup(
+        new IntakeLengthCommand(this.intake, 0.3, 500000), 
+        new ShootPowerCommand(this.shooter, 0.7)
+        )
+      );*/
+    // The following section should:
+    // Start spinning up the shooter
+    // Start the intake 2 seconds later
+    // Stop both the intake and shooter after the intake has spun for 500,000 encoder ticks
+    // Drive forwards for 100,000 encoder ticks
+    return new DriveLengthCommand(this.drive, -0.2, 100000) //(Drive subsys; Drive power; Drive encoder ticks)
+      .beforeStarting(new ParallelDeadlineGroup(
+        (new IntakeLengthCommand(this.intake, 0.3, 500000)) //(Intake subsys; Intake power; Intake encoder ticks)
+          .beforeStarting(new WaitCommand(2.0)), //(Wait seconds) - This should be long enough to allow the shooter to speed up before ball feeding
+        new ShootPowerCommand(this.shooter, 0.7) //(Shooter subsys; Shooter power)
+      )
+    );
   }
 }

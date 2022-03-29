@@ -6,15 +6,32 @@ package frc.robot.commands;
 
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.TankDriveSubsystem;
-impo.subsystems.IntakeSubsystem;rt frc.robot
+
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.TimedCommand;
 
+//network tables import
+//import edu.wpi.first.networktables.NetworkTable;
+//import edu.wpi.first.networktables.NetworkTableEntry;
+//import edu.wpi.first.networktables.NetworkTableInstance;
+
+//public class Yay extends CommandBase {
+  //NetworkTable xEntry;
+  //NetowrkTable yEntry;
+
+  //public void robotInit(){
+    //NetworkTableInstance isnt = NetworkTableInstance.getDefault()
+
+    //NetworkTable table = inst.getTable("datatable")
+
+    //xEntry = table.getG
+  //}
+//}
 
 /** An example command that uses an example subsystem. */
-public class BasicAuto extends CommandBase {
+public class WorkInProggressAuto extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final TankDriveSubsystem driveTrain;
   private final IntakeSubsystem intake;
@@ -27,7 +44,7 @@ public class BasicAuto extends CommandBase {
   
   private boolean doneRunning = false; 
 
-  public BasicAuto(TankDriveSubsystem driveTrain,IntakeSubsystem intake,ShooterSubsystem shooter) {
+  public WorkInProggressAuto(TankDriveSubsystem driveTrain,IntakeSubsystem intake,ShooterSubsystem shooter) {
     
     this.driveTrain = driveTrain;
     this.intake = intake;
