@@ -27,6 +27,7 @@ public class DriveLengthCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    
     this.driver.allMotorEquality(this.power);
   }
 

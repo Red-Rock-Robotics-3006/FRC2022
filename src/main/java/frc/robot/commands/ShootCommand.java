@@ -37,7 +37,7 @@ public class ShootCommand extends CommandBase {
   public void execute() {
     this.intake.setPower(0.2);
     while(Math.abs(this.shooter.getEncoderDistance()) < Math.abs(50000))
-      this.shooter.shoot();
+      this.shooter.shoot(0.85);
     this.driveTrain.allMotorEquality(-0.2);
   }
 
