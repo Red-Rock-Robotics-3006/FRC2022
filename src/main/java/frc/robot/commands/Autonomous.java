@@ -1,7 +1,7 @@
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
-
+/*
 package frc.robot.commands;
 
 import frc.robot.subsystems.ExampleSubsystem;
@@ -28,7 +28,7 @@ public class Autonomous extends SequentialCommandGroup {
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
-   */
+   /
 
   public Autonomous(TankDriveSubsystem driveTrain, IntakeSubsystem intake, ShooterSubsystem shooter) {
     this.driveTrain = driveTrain;
@@ -61,7 +61,7 @@ public class Autonomous extends SequentialCommandGroup {
     while (driveTrain.getRightEncoderDistance() < 3) {
       System.out.println("Here AGain!");
       driveTrain.mecDrive(0, 0, 0.0, -0.5);
-    }*/
+    }
 
   }
 
@@ -78,3 +78,4 @@ public class Autonomous extends SequentialCommandGroup {
     this.intake.setPower(0);
   }
 }
+*/

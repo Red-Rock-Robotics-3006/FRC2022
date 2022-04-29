@@ -11,7 +11,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class TankDriveSubsystem extends SubsystemBase {
-  public WPI_TalonFX leftMotorBack = new WPI_TalonFX(1);
+  public WPI_TalonFX leftMotorBack = new WPI_TalonFX(50);
   public WPI_TalonFX leftMotorFront = new WPI_TalonFX(4);
   public WPI_TalonFX rightMotorBack = new WPI_TalonFX(2);
   public WPI_TalonFX rightMotorFront = new WPI_TalonFX(3);
